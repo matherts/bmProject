@@ -6,7 +6,7 @@ class Score {
     //date Importance Value is on scale of 1 to 10
     dateImportanceVariables(dateValue, amountOfDates){
         this.dateValues = []
-        let valueSquareRoot = dateValue ^ .5
+        let valueSquareRoot = Math.sqrt(dateValue)
         for(let x=0; x<amountOfDates; x++){
             this.dateValues.unshift(valueSquareRoot * (x+1))
         }
@@ -25,9 +25,15 @@ class Score {
         return value
     }
 
+    addScoreToCalendar(calendar, date, person){
+        let personScore = this.scorePerson(person)
+        calendar[date].score += personScore
+    }
+
+    //this scores an entire calendar
     scoreCalendar(calendar){
         let calendarValue = 0
-        object.keys(calendar).forEach(date => {
+        Object.keys(calendar).forEach(date => {
             calendarValue += calendar[date].score
         })
         return calendarValue

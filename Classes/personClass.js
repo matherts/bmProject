@@ -46,6 +46,7 @@ class Person {
     }
 
     convertTimeToValue(AMorPM){
+        this.timePreferenceString = AMorPM
         if(AMorPM==='AM'){
             return 1
         }else if(AMorPM==='PM'){
@@ -56,7 +57,7 @@ class Person {
     }
 
     timeRank(AMorPM){
-        timeValue = this.convertTimeToValue(AMorPM)
+        let timeValue = this.convertTimeToValue(AMorPM)
         if(this.timePreference === 0){
             return .5
         }else if(this.timePreference === timeValue){
@@ -65,6 +66,14 @@ class Person {
             return 0
         }else{
             return 'error'
+        }
+    }
+
+    outputTimePreference(){
+        if(this.timePreference===1){
+            return ["AM", "PM"]
+        }else{
+            return ["PM", "AM"]
         }
     }
 
