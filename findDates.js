@@ -2,6 +2,9 @@ const buildScores = require('./buildScores')
 const buildPeople = require('./buildPeople')
 const buildCalendar = require('./buildCalendar')
 const randomSort = require('./randomSort')
+const hash = require('object-hash')
+const getAllPermutations = require('./getAllPermutations')
+
 
 let scores = buildScores()
 let people = buildPeople()
@@ -9,9 +12,11 @@ let calendar = buildCalendar()
 
 let totalDates = people[0].dates.length
 let allCalendars = []
+let allCalendarHashes = []
 
-for(let x=1; x<10; x++){
-    console.log('attempt#', x)
+const allPeopleCombinations = getAllPermutations(people)
+
+for(let x=1; x<20; x++){
     people.forEach(person => {
         let times = person.outputTimePreference()
         let index = 0
@@ -42,13 +47,22 @@ for(let x=1; x<10; x++){
     let calendarValue = scores.scoreCalendar(calendar.calendarDates)
 
     let jsonCalendar = calendar.calendarToJSON()
-
-    allCalendars.push({score: calendarValue, calendar: jsonCalendar})
-
+    let calendarHash = hash(jsonCalendar)
+    if(allCalendarHashes.includes(calendarHash)){
+        x-=1
+        console.log('same hash')
+    }else{
+        allCalendarHashes.push(calendarHash)
+        allCalendars.push({score: calendarValue, calendar: jsonCalendar})
+    }
     calendar.resetCalendar()
     randomSort(people)
 }
 
-console.log(allCalendars)
+allCalendars.sort(function(a,b){return b.score - a.score})
 
-
+// allCalendars.forEach(calendar => {
+//     console.log(calendar)
+// })
+console.log(allCalendars.length)
+console.log(allCalendars[0])

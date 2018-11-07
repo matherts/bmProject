@@ -17,7 +17,6 @@ class Calendar {
         //    this.calendarDates[date][time] = {}
         // })
     }
-
     buildCalendar(dates){
         dates.forEach(date => {
             this.addDateToCalendar(date)
@@ -56,14 +55,11 @@ class Calendar {
         let calendarJson = {}
         Object.values(this.calendarDates).forEach(dateValues => {
             let dateInformation = dateValues.date
-            calendarJson[dateInformation.date] = dateInformation.timeSlots
+            calendarJson[dateInformation.date] = JSON.stringify(dateInformation.timeSlots)
             // json[date][date]
         })
         return calendarJson
     }
-
-    
-
 
 }
 
