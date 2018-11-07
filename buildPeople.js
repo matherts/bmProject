@@ -1,9 +1,7 @@
 //this is to build out t
-
-const peopleData = require('./Data/people.json')
 const PersonClass = require('./Classes/personClass')
 
-const buildPeople = () => {
+const buildPeople = (peopleData) => {
 let allPeople = []
 peopleData.forEach(person => {
     let newPerson = new PersonClass(person.name)
